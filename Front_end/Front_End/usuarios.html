@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de usuários</title>
+    <style>
+h1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+      body{
+        background-image: -webkit-repeating-radial-gradient(#d5a7f3);
+         display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 20px;
+
+      }
+
+      #container2{
+        background-color: rgb(236, 202, 239);
+        padding: 30px;
+        padding-top: 10px;
+        border-radius: 20px;
+      }
+
+      input{
+        height: 30px;
+        width: 300px;
+        border-radius: 5px;
+        border: 1px solid;
+        margin-bottom: 15px;
+       
+        
+      }
+   
+
+
+    </style>
+</head>
+<body>
+
+ <div id="container2">
+
+  <h1>Registered Users </h1>
+  <input type="text" id="campo-busca" placeholder="Searching for names..." oninput="filtrarUsuarios()" />
+  <div id="lista-usuarios"></div>
+
+
+
+</div>
+
+<script>
+
+
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch("http://localhost:8080/usuarios")
+      .then(response => response.json())
+      .then(data=>{
+
+        usuarios=data
+        
+      })
+      
+      .catch(error => console.error("Erro ao buscar usuários:", error));
+
+  });
+
+
+
+
+let usuarios=[] //lista
+
+function exibirUsuarios(usuarios){
+
+  const container=document.getElementById("lista-usuarios")
+  container.innerHTML=" "
+
+  usuarios.forEach(usuario=>{
+  const item= document.createElement("div")
+  item.textContent= `👤 ${usuario.nome}`
+  container.appendChild(item)
+
+})
+
+}
+
+
+function filtrarUsuarios(){
+  const termo= document.getElementById("campo-busca").value.toLowerCase()
+  const filtrado=usuarios.filter(u=> u.nome.toLowerCase().includes(termo))
+  exibirUsuarios(filtrado)
+}
+
+
+
+
+
+</script>
+
+
+
+
+
+    
+</body>
+</html>
