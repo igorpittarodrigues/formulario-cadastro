@@ -39,15 +39,17 @@ public class UserController {
 
 
     }
-
     @GetMapping
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     public List<UserDTO > listarUsuarios(){
-        return repository.findAll().stream().map(user-> new UserDTO(
+        return repository.findAll().stream()
+                .map(user-> new UserDTO(
 
                 user.getId(),
                 user.getNome(),
                 user.getEmail(),
                 null
+
 
                 )).toList();
     }
